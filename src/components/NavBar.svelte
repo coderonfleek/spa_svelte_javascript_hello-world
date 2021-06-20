@@ -2,6 +2,7 @@
   import { link } from "svelte-spa-router";
   import active from "svelte-spa-router/active";
   import RouterLink from "./RouterLink.svelte";
+  import AuthenticationButton from "./buttons/AuthenticationButton.svelte";
 </script>
 
 <main>
@@ -38,7 +39,7 @@
         </a>
       </div>
       <div class="nav-bar__actions">
-        <authentication-button />
+        <AuthenticationButton />
       </div>
     </nav>
   </div>
