@@ -1,3 +1,11 @@
+<script>
+  import HeroBanner from "../components/HeroBanner.svelte";
+  import NextSteps from "../components/NextSteps.svelte";
+</script>
+
 <main>
-  <p>Home page</p>
+  <div>
+    <HeroBanner />
+    <NextSteps />
+  </div>
 </main>

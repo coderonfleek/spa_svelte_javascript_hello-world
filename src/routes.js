@@ -6,5 +6,5 @@ import ExternalAPI from './views/ExternalAPI.svelte'
 export default {
     '/': Home,
     '/profile' : Profile,
-    '/externalapi': ExternalAPI
+    '/external-api': ExternalAPI
 }

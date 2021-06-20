@@ -1,5 +1,6 @@
 <script>
   import { link } from "svelte-spa-router";
+  import active from "svelte-spa-router/active";
 
   export let to;
 
@@ -7,7 +8,9 @@
 </script>
 
 <main>
-    <a href={to} use:link>
-    <slot />
-  </a>
+  <span>
+    <a href={to} use:link use:active={{ className: "active" }}>
+      <slot />
+    </a>
+  </span>
 </main>

@@ -1,4 +1,6 @@
 <script>
+  import { link } from "svelte-spa-router";
+  import active from "svelte-spa-router/active";
   import RouterLink from "./RouterLink.svelte";
 </script>
 
@@ -17,22 +19,23 @@
         </RouterLink>
       </div>
       <div class="nav-bar__tabs">
-        <RouterLink
-          to="/profile"
-          exact
+        <a
+          href="/profile"
+          use:link
           class="nav-bar__tab"
-          active-class="nav-bar__tab--active"
+          use:active={{ className: "nav-bar__tab--active" }}
         >
           Profile
-        </RouterLink>
-        <RouterLink
-          to="/external-api"
-          exact
+        </a>
+
+        <a
+          href="/external-api"
+          use:link
           class="nav-bar__tab"
-          active-class="nav-bar__tab--active"
+          use:active={{ className: "nav-bar__tab--active" }}
         >
           External API
-        </RouterLink>
+        </a>
       </div>
       <div class="nav-bar__actions">
         <authentication-button />
