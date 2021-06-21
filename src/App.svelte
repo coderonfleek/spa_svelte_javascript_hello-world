@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import auth from "./authService";
-  import { isAuthenticated, user, user_tasks, tasks } from "./store";
+  import { isAuthenticated, user, auth0Client } from "./store";
   import TaskItem from "./components/TaskItem.svelte";
 
   import Router from "svelte-spa-router";
@@ -10,17 +10,18 @@
   import NavBar from "./components/NavBar.svelte";
   import Footer from "./components/Footer.svelte";
 
-  let auth0Client;
+  let client;
   let newTask;
 
   onMount(async () => {
-    auth0Client = await auth.createClient();
+    client = await auth.createClient();
 
-    isAuthenticated.set(await auth0Client.isAuthenticated());
-    user.set(await auth0Client.getUser());
+    auth0Client.set(client);
+    isAuthenticated.set(await client.isAuthenticated());
+    user.set(await client.getUser());
   });
 
-  function login() {
+  /* function login() {
     auth.loginWithPopup(auth0Client);
   }
 
@@ -52,7 +53,7 @@
     for (var i = length; i > 0; --i)
       result += chars[Math.round(Math.random() * (chars.length - 1))];
     return result;
-  }
+  } */
 </script>
 
 <main>

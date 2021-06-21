@@ -3,6 +3,12 @@
   import active from "svelte-spa-router/active";
   import RouterLink from "./RouterLink.svelte";
   import AuthenticationButton from "./buttons/AuthenticationButton.svelte";
+  import { auth0Client, isAuthenticated } from "../store";
+  import auth from "../authService";
+
+  function login() {
+    auth.loginWithPopup($auth0Client);
+  }
 </script>
 
 <main>
@@ -20,23 +26,34 @@
         </RouterLink>
       </div>
       <div class="nav-bar__tabs">
-        <a
-          href="/profile"
-          use:link
-          class="nav-bar__tab"
-          use:active={{ className: "nav-bar__tab--active" }}
-        >
-          Profile
-        </a>
-
-        <a
-          href="/external-api"
-          use:link
-          class="nav-bar__tab"
-          use:active={{ className: "nav-bar__tab--active" }}
-        >
-          External API
-        </a>
+        {#if $isAuthenticated}
+          <a
+            href="/profile"
+            use:link
+            class="nav-bar__tab"
+            use:active={{ className: "nav-bar__tab--active" }}
+          >
+            Profile
+          </a>
+        {:else}
+          <a href="/" on:click={() => login()} class="nav-bar__tab">
+            Profile
+          </a>
+        {/if}
+        {#if $isAuthenticated}
+          <a
+            href="/external-api"
+            use:link
+            class="nav-bar__tab"
+            use:active={{ className: "nav-bar__tab--active" }}
+          >
+            External API
+          </a>
+        {:else}
+          <a href="/" on:click={() => login()} class="nav-bar__tab">
+            External API
+          </a>
+        {/if}
       </div>
       <div class="nav-bar__actions">
         <AuthenticationButton />
