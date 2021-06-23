@@ -7,8 +7,8 @@ import config from "../auth_config";
 
 async function createClient() {
     let auth0Client = await createAuth0Client({
-        domain: config.domain,
-        client_id: config.clientId
+        domain: SVELTE_APP_AUTH0_DOMAIN,
+        client_id: SVELTE_APP_AUTH0_CLIENT_ID
       });
 
       return auth0Client

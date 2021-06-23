@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { auth0Client } from "../store";
   //let apiServerUrl = process.env.VUE_APP_API_SERVER_URL;
-  let apiServerUrl = "http://localhost:6060";
+  let apiServerUrl = SVELTE_APP_API_SERVER_URL;
   let message;
   let activeMessage;
 

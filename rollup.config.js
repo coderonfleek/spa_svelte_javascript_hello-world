@@ -4,6 +4,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 
+import replace from '@rollup/plugin-replace';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -36,6 +41,12 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({
+            SVELTE_APP_AUTH0_DOMAIN: JSON.stringify(process.env.SVELTE_APP_AUTH0_DOMAIN),
+			SVELTE_APP_AUTH0_CLIENT_ID: JSON.stringify(process.env.SVELTE_APP_AUTH0_CLIENT_ID),
+			SVELTE_APP_AUTH0_AUDIENCE: JSON.stringify(process.env.SVELTE_APP_AUTH0_AUDIENCE),
+			SVELTE_APP_API_SERVER_URL: JSON.stringify(process.env.SVELTE_APP_API_SERVER_URL)
+        }),
 		svelte({
 			// enable run-time checks when not in production
 			dev: !production,

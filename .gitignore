@@ -2,5 +2,4 @@
 /public/build/
 
 .DS_Store
-
-auth_config.js
+.env
