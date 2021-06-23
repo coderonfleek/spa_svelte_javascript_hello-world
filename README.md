@@ -1,105 +1,119 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Hello, Svelte World!
 
----
+This sample uses the [Auth0 SPA SDK](https://github.com/auth0/auth0-spa-js) to implement the following security tasks:
 
-# svelte app
+- Add user login and logout.
+- Retrieve user profile information.
+- Protect application routes.
+- Make secure calls to an API.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+![Hello, Svelte World!](hello-svelte.png)
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+## Quick Auth0 Set Up
 
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
+### Set up the project
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
-
-## Get started
-
-Install the dependencies...
+Install the project dependencies:
 
 ```bash
-cd svelte-app
 npm install
 ```
 
-...then start [Rollup](https://rollupjs.org):
+### Register a Svelte application with Auth0
+
+- Open the [Applications](https://manage.auth0.com/#/applications) section of the Auth0 Dashboard.
+
+- Click on the **Create Application** button.
+
+- Provide a **Name** value such as _Hello World Client_.
+
+- Choose "Single Page Web Applications" as the **application type**.
+
+- Click on the **Create** button.
+
+> View ["Register Applications" document](https://auth0.com/docs/applications/set-up-an-application) for more details.
+
+Your Auth0 application page loads up.
+
+Your Svelte application will redirect users to Auth0 whenever they trigger an authentication request. Auth0 will present them with a login page. Once they log in, Auth0 will redirect them back to your Svelte application. For that redirecting to happen securely, you must specify in your **Auth0 Application Settings** the URLs to which Auth0 can redirect users once it authenticates them.
+
+As such, click on the "Settings" tab of your Auth0 Application page and fill in the following values:
+
+**Allowed Callback URLs**
 
 ```bash
-npm run dev
+http://localhost:4040
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
-
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
+**Allowed Logout URLs**
 
 ```bash
-npm run build
+http://localhost:4040
 ```
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
-
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-## Using TypeScript
-
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
+**Allowed Web Origins**
 
 ```bash
-node scripts/setupTypeScript.js
+http://localhost:4040
 ```
 
-Or remove the script via:
+**Scroll down and click the "Save Changes" button.**
+
+### Connect Svelte with Auth0
+
+Create a `.env` file under the project directory and populate it as follows:
 
 ```bash
-rm scripts/setupTypeScript.js
+SVELTE_APP_AUTH0_DOMAIN=
+SVELTE_APP_AUTH0_CLIENT_ID=
+SVELTE_APP_AUTH0_AUDIENCE=https://hello-world.example.com
+SVELTE_APP_API_SERVER_URL=http://localhost:6060
 ```
 
-## Deploying to the web
+Head back to your Auth0 application page. Follow these steps to get the `SVELTE_APP_AUTH0_DOMAIN` and `SVELTE_APP_AUTH0_CLIENT_ID` values:
 
-### With [Vercel](https://vercel.com)
+![Auth0 application settings to enable user authentication](https://images.ctfassets.net/23aumh6u8s0i/3jIw7AU2SbVOfAml3x6JNK/206be29f3784c5be87cee993dc8d7947/hello-world-client-settings.png)
 
-Install `vercel` if you haven't already:
+1. Click on the "Settings" tab, if you haven't already.
+
+2. Use the "Domain" value from the "Settings" as the value of `SVELTE_APP_AUTH0_DOMAIN` in `.env`.
+
+3. Use the "Client ID" value from the "Settings" as the value of `SVELTE_APP_AUTH0_CLIENT_ID` in `.env`.
+
+### Run the project
+
+With the Auth0 configuration set, run the Svelte application by issuing the following command:
 
 ```bash
-npm install -g vercel
+npm start
 ```
 
-Then, from within your project folder:
+Visit [`http://localhost:4040/`](http://localhost:4040/) to access the application.
 
-```bash
-cd public
-vercel deploy --name my-project
-```
+## Advanced Auth0 Set Up
 
-### With [surge](https://surge.sh/)
+### Connecting to an external API
 
-Install `surge` if you haven't already:
+The external API used in this Svelte sample is the ["Hello World API: Express.js Sample"](https://github.com/auth0-sample-gallery/api_express_javascript_hello-world).
 
-```bash
-npm install -g surge
-```
+Follow the instructions on that `README` of that repository to set up and run the API.
 
-Then, from within your project folder:
+Once set up, you can see the different server responses by interacting with the message box present in [`http://localhost:4040/external-api`](http://localhost:4040/external-api).
 
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+### Admin access
+
+When you log in to the application and visit the `/external-api` page, you have different options to test to connection between your Svelte application and a remote API server. You can retrieve a public, protected or admin message.
+
+Requesting the protected message requires Svelte to send an access token with the server request. On the other hand, requesting the admin message requires Svelte to send an access token with the server request that also has the `read:admin-messages` permission.
+
+You can use the Auth0 Dashboard to create an `admin` role and assign it the`read:admin-messages` permission. Then, you can assign the `admin` role to any user that you want to access the `/admin` endpoint.
+
+If you need help doing so, check out the following resources:
+
+- [Create roles](https://auth0.com/docs/authorization/rbac/roles/create-roles)
+
+- [Create permissions](https://auth0.com/docs/get-started/dashboard/add-api-permissions)
+
+- [Add permissions to roles](https://auth0.com/docs/authorization/rbac/roles/add-permissions-to-roles)
+
+- [Assign roles to users](https://auth0.com/docs/users/assign-roles-to-users)
