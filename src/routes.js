@@ -15,23 +15,19 @@ isAuthenticated.subscribe(value =>  {
     authenticated = value;
 })
 
-auth0Client.subscribe(value =>  {
-    console.log(value);
-    client = value;
-})
 
 export default {
     '/': Home,
-    '/profile' : Profile, /* wrap({
-        component: Profile,
-        conditions: [
-            (detail) => {
-                if(!authenticated){
-                    auth.loginWithPopup(client);
-                }
-                return false;
-            }
-        ]
-    }) */
+    '/profile' : Profile,
     '/external-api': ExternalAPI
 }
+
+/* wrap({
+    component: Profile,
+    conditions: [
+        (detail) => {
+            
+            return authenticated;
+        }
+    ]
+}) */

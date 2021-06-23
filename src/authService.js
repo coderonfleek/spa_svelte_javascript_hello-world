@@ -1,14 +1,15 @@
 
 import createAuth0Client from "@auth0/auth0-spa-js";
 import {user, isAuthenticated, popupOpen} from "./store";
-import config from "../auth_config"; 
+//import config from "../auth_config"; 
 
 
 
 async function createClient() {
     let auth0Client = await createAuth0Client({
         domain: SVELTE_APP_AUTH0_DOMAIN,
-        client_id: SVELTE_APP_AUTH0_CLIENT_ID
+        client_id: SVELTE_APP_AUTH0_CLIENT_ID,
+        audience : SVELTE_APP_AUTH0_AUDIENCE
       });
 
       return auth0Client
